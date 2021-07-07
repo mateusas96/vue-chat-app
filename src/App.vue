@@ -19,17 +19,15 @@
 			<button class="logout" v-on:click="logout">Logout</button>
 			<h1 class="username">Welcome, {{ state.username }}</h1>
 		</header>
-		<div class="scrollable">
-			<div class="chat-box">
-				<div
-					v-for="message in state.messages"
-					:key="message.id"
-					:class="(message.username == state.username ? 'message current-user' : 'message')"
-				>
-					<div class="message-inner">
-						<div class="username">{{ message.username }}</div>
-						<div class="content">{{ message.content }}</div>
-					</div>
+		<div class="chat-box">
+			<div
+				v-for="message in state.messages"
+				:key="message.id"
+				:class="(message.username == state.username ? 'message current-user' : 'message')"
+			>
+				<div class="message-inner">
+					<div class="username">{{ message.username }}</div>
+					<div class="content">{{ message.content }}</div>
 				</div>
 			</div>
 		</div>
@@ -47,7 +45,6 @@
 </template>
 
 <script>
-import {reactive} from 'vue';
 import db from './db';
 import "./App.scss";
 
@@ -58,10 +55,10 @@ export default {
 		return {
 			inputUsername: "",
 			inputMessage: "",
-			state: reactive({
+			state: {
 				username: "",
 				messages: [],
-			})
+			},
 		};
 	},
 	methods: {
@@ -101,6 +98,7 @@ export default {
 					content: data[key].content,
 				};
 			});
+			window.scrollTo(0, document.body.scrollHeight);
 		});
 	}
 }
