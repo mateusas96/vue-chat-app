@@ -29,13 +29,10 @@ export default {
 	methods: {
 		login() {
 			if (this.username !== "") {
+				// send data to parent component
 				this.$emit("retrieveData", this.username);
 			}
 		},
 	},
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -31,6 +31,7 @@ export default {
 	},
 	methods: {
 		retrieveData(username) {
+			// retrieve data from child component and set
 			this.inputUsername = username;
 			this.state.username = username;
 		}
