@@ -104,6 +104,14 @@
 					text-align: left;
 					word-break: break-word;
 				}
+
+				.created-at {
+					color: #888;
+					font-size: 12px;
+					margin-top: 5px;
+					padding-left: 15px;
+					padding-right: 15px;
+				}
 			}
 
 			&.current-user {

@@ -13,6 +13,7 @@
 				<div class="message-inner">
 					<div class="username">{{ message.username }}</div>
 					<div class="content">{{ message.content }}</div>
+					<div class="created-at">Sent {{fromNow(message.created_at)}}</div>
 				</div>
 			</div>
 			<div
@@ -42,6 +43,7 @@
 
 <script>
 import database from "../Database/Database";
+import moment from "moment";
 import "./Chat.scss";
 
 export default {
@@ -117,6 +119,9 @@ export default {
 			} else if (event.path[0].scrollTop > (this.chatBoxDiv.scrollHeight / 2)) {
 				this.rotateArrowToLookUp();
 			}
+		},
+		fromNow(createdAt) {
+			return moment(createdAt).fromNow();
 		}
 	},
 	mounted() {
