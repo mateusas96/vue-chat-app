@@ -22,18 +22,18 @@ export default {
 	},
 	data() {
 		return {
-			inputUsername: "",
 			state: {
 				username: "",
+				chatRoom: "",
 				messages: [],
 			},
 		};
 	},
 	methods: {
-		retrieveData(username) {
+		retrieveData(data) {
 			// retrieve data from child component and set
-			this.inputUsername = username;
-			this.state.username = username;
+			this.state.username = data.username;
+			this.state.chatRoom = data.chatRoom;
 		}
 	}
 }

@@ -5,6 +5,9 @@
 			<h1 class="username">Welcome, {{ newSate.username }}</h1>
 		</header>
 		<div class="chat-box" :onscroll="scrollListener">
+			<div class="chat-room">
+				Chat room: {{ newSate.chatRoom }}
+			</div>
 			<div
 				v-for="message in newSate.messages"
 				:key="message.id"
@@ -60,7 +63,7 @@ export default {
 	methods: {
 		sendMessage() {
 			// get "messages" reference from database
-			const messagesRef = database.database().ref("messages");
+			const messagesRef = database.database().ref(`${this.newSate.chatRoom}/messages`);
 
 			// if message is empty do nothing
 			if (this.inputMessage === "") return null;
@@ -83,6 +86,8 @@ export default {
 			* by this auto logout happens
 			*/
 			this.newSate.username = "";
+			this.newSate.chatRoom = "";
+			this.newSate.messages = [];
 		},
 		rotateArrowToLookUp() {
 			// set styles for each browser
@@ -103,9 +108,9 @@ export default {
 			* scroll to bottom, if current Y coordinate is less than scroll height
 			* otherwise scroll to top
 			*/
-			if (this.chatBoxDiv.scrollTop <= (this.chatBoxDiv.scrollHeight / 2)) {
+			if (this.chatBoxDiv.scrollTop <= (this.chatBoxDiv.scrollHeight % 2)) {
 				this.chatBoxDiv.scrollTo(0, this.chatBoxDiv.scrollHeight);
-			} else if (this.chatBoxDiv.scrollTop > (this.chatBoxDiv.scrollHeight / 2)) {
+			} else if (this.chatBoxDiv.scrollTop > (this.chatBoxDiv.scrollHeight % 2)) {
 				this.chatBoxDiv.scrollTo(0, 0);
 			}
 		},
@@ -114,9 +119,9 @@ export default {
 			* if current Y coordinate is less than scroll height, then rotate "scroll to" button arrow to look down
 			* otherwise rotate to look up
 			*/
-			if (event.path[0].scrollTop <= (this.chatBoxDiv.scrollHeight / 2)) {
+			if (event.path[0].scrollTop <= (this.chatBoxDiv.scrollHeight % 2)) {
 				this.rotateArrowToLookDown();
-			} else if (event.path[0].scrollTop > (this.chatBoxDiv.scrollHeight / 2)) {
+			} else if (event.path[0].scrollTop > (this.chatBoxDiv.scrollHeight % 2)) {
 				this.rotateArrowToLookUp();
 			}
 		},
@@ -130,7 +135,7 @@ export default {
 		// get and set "scroll-to" div element
 		this.scrollToDiv = document.getElementsByClassName("scroll-to")[0];
 		// get "messages" reference from database
-		const messagesRef = database.database().ref("messages");
+		const messagesRef = database.database().ref(`${this.newSate.chatRoom}/messages`);
 
 		// listen for changes and retrieve data from database
 		messagesRef.on('value', snapshot => {

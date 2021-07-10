@@ -3,6 +3,13 @@
 		<form class="login-form" v-on:submit.prevent="login">
 			<div class="form-inner">
 				<h1>Login to chat</h1>
+				<label for="chat-room">Chat room</label>
+				<input
+					id="chat-room"
+					v-model="chatRoom"
+					type="text"
+					placeholder="Please enter your chat room"
+				/>
 				<label for="username">Username</label>
 				<input
 					id="username"
@@ -23,14 +30,19 @@ export default {
 	name: "Login",
 	data() {
 		return {
-			username: '',
+			username: "",
+			chatRoom: "",
 		};
 	},
 	methods: {
 		login() {
-			if (this.username !== "") {
+			if (this.username !== "" || this.chatRoom !== "") {
 				// send data to parent component
-				this.$emit("retrieveData", this.username);
+				const data = {
+					username: this.username,
+					chatRoom: this.chatRoom,
+				};
+				this.$emit("retrieveData", data);
 			}
 		},
 	},
